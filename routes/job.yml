@@ -1,0 +1,9 @@
+paths:
+  /job/update_total_like:
+    get:
+      tags:
+        - Job
+      summary: 모든 상품 totalLike 업데이트
+      responses:
+        "200":
+          description: OK

@@ -1,0 +1,184 @@
+paths:
+  /product/like_product:
+    get:
+      tags:
+        - Product
+      summary: 좋아요 상품 조회
+      parameters:
+        - name: userId
+          in: query
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+  /product/like_brand:
+    get:
+      tags:
+        - Product
+      summary: 좋아요 브랜드 상품 조회
+      parameters:
+        - name: userId
+          in: query
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+  /product:
+    get:
+      tags:
+        - Product
+      summary: 상품 목록 조회
+      description: 특정 카테고리, 브랜드의 상품 목록 조회 가능
+      parameters:
+        - name: keyword
+          in: query
+          description: 검색할 키워드
+          required: false
+          schema:
+            type: string
+        - name: categoryId
+          in: query
+          description: 조회할 category id. null 값인 경우, 필터 없이 상품 목록 조회.
+          required: false
+          schema:
+            type: string
+        - name: brandId
+          in: query
+          description: 조회할 brand id. null 값인 경우, 필터 없이 상품 목록 조회.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: 조회순. (total_like(좋아요순), price(가격순), stock_quantity(재고순))
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+    post:
+      tags:
+        - Product
+      summary: 상품 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+            example:
+              productName: "삼성 갤럭시 s24"
+              productImg: "https://images.samsung.com/kdp/event/sec/2024/0119_s24/launching/buying/slide_v20/erk_buying_s24_pod01_pc.jpg"
+              price: 1216900
+              stockQuantity: 50
+              categoryId: 10
+              brandId: 10
+              totalLike: 20
+
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+  /product/{id}:
+    get:
+      tags:
+        - Product
+      summary: 특정 상품 조회
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    put:
+      tags:
+        - Product
+      summary: 상품 업데이트
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+            example:
+              productName: "삼성 갤럭시 s24"
+              productImg: "https://images.samsung.com/kdp/event/sec/2024/0119_s24/launching/buying/slide_v20/erk_buying_s24_pod01_pc.jpg"
+              price: 1216900
+              stockQuantity: 50
+              categoryId: 10
+              brandId: 10
+              totalLike: 20
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    delete:
+      tags:
+        - Product
+      summary: 상품 삭제
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        productName:
+          type: string
+        productImg:
+          type: string
+        price:
+          type: integer
+        stockQuantity:
+          type: integer
+        categoryId:
+          type: integer
+        brandId:
+          type: integer
+        totalLike:
+          type: integer
+      required:
+        - productName
+        - productImg
+        - price
+        - stockQuantity
+        - categoryId
+        - brandId
+        - totalLike

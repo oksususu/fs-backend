@@ -1,0 +1,102 @@
+paths:
+  /like/product/{id}: # 브랜드와 상품 좋아요 api를 따로 두고 싶기에, path의 두 타입 설정
+    post:
+      tags:
+        - Like
+      summary: 상품 좋아요 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/like"
+            example:
+              userId: 100
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    delete:
+      tags:
+        - Like
+      summary: 상품 좋아요 삭제
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/like"
+            example:
+              userId: 100
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+  /like/brand/{id}:
+    post:
+      tags:
+        - Like
+      summary: 브랜드 좋아요 등록
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/like"
+            example:
+              userId: 100
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    delete:
+      tags:
+        - Like
+      summary: 브랜드 좋아요 삭제
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/like"
+            example:
+              userId: 100
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+components:
+  schemas:
+    like:
+      type: object
+      properties:
+        userId:
+          type: integer
