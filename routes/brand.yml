@@ -17,6 +17,23 @@ paths:
         "400":
           description: Error
 
+  /brand/category:
+    get:
+      tags:
+        - Brand
+      summary: 카테고리 브랜드 리스트 조회
+      parameters:
+        - name: categoryId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
   /brand:
     get:
       tags:

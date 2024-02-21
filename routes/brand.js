@@ -7,6 +7,9 @@ var router = express.Router();
 /* 좋아요 브랜드 리스트 조회 */
 router.get("/like/", asyncHandler(brandController.geBrandsByLikeBrand));
 
+/* 카테고리 브랜드 리스트 조회 */
+router.get("/category/", asyncHandler(brandController.getBrandsByCategory));
+
 /* 브랜드 조회 api */
 router.get("/", asyncHandler(brandController.getBrands));
 

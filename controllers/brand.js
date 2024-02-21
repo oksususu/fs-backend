@@ -50,6 +50,21 @@ exports.geBrandsByLikeBrand = async (req, res) => {
   res.json(brands);
 };
 
+/* 카테고리 브랜드 리스트 조회 */
+exports.getBrandsByCategory = async (req, res) => {
+  const { categoryId } = req.query;
+  const query = `select DISTINCT brand.brand_id from brand join product on product.brand_id=brand.brand_id where product.category_id = '${categoryId}' limit ${limit}`;
+
+  const brand_ids = (await client.query(query).then((res) => res.rows)).map(({ brand_id }) => brand_id);
+  const brands = [];
+  for (let brand_id of brand_ids) {
+    let brand_query = `select * from brand where brand_id=${brand_id}`;
+    let brand = await client.query(brand_query).then((res) => res.rows[0]);
+    brands.push(brand);
+  }
+  res.json(brands);
+};
+
 /* 특정 브랜드 조회 */
 exports.getBrandById = async (req, res) => {
   const { id: brandId } = req.params;
