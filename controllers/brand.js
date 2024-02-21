@@ -16,7 +16,7 @@ const checkSameBrandName = async (brandName, updateBrandId = null) => {
   let sameBrands = await client.query(brandNameCheckQuery).then((res) => res.rows);
   sameBrands = sameBrands.filter(({ brand_name: brand, brand_id: brandId }) => brand.split(" ").join("") == noBlankBrandName && brandId != updateBrandId);
   if (sameBrands.length !== 0) {
-    throw new ValidationError(404, `같은 브랜드 이름이 존재합니다. 브랜드 이름을 확인해주세요. 유사한 브랜드 이름 목록 : ${JSON.stringify(sameBrands)}`);
+    throw new ValidationError(400, `같은 브랜드 이름이 존재합니다. 브랜드 이름을 확인해주세요. 유사한 브랜드 이름 목록 : ${JSON.stringify(sameBrands)}`);
   }
 };
 
@@ -54,6 +54,12 @@ exports.geBrandsByLikeBrand = async (req, res) => {
 exports.getBrandsByCategory = async (req, res) => {
   const { categoryId } = req.query;
   const query = `select DISTINCT brand.brand_id from brand join product on product.brand_id=brand.brand_id where product.category_id = '${categoryId}' limit ${limit}`;
+
+  // 카테고리 체크
+  const category = client.query(`select * from category where category_id=${categoryId}`);
+  if (category.length !== 0) {
+    throw new ValidationError(404, `해당 카테고리id가 존재하지 않습니다.`);
+  }
 
   const brand_ids = (await client.query(query).then((res) => res.rows)).map(({ brand_id }) => brand_id);
   const brands = [];
