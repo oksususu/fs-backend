@@ -1,5 +1,5 @@
 const { ValidationError } = require("../utils/async-handler");
-const client = require("./dbClient");
+const client = require("../config/dbClient");
 const productController = require("../controllers/products");
 
 const updateProductTotalLike = async (productId, type) => {

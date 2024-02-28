@@ -1,6 +1,6 @@
 const { ValidationError } = require("../utils/async-handler");
 const tqdm = require("tqdm");
-const client = require("./dbClient");
+const client = require("../config/dbClient");
 
 const updateProductTotalLike = async (productId, productTotalLike) => {
   query = `update product set total_like=${productTotalLike} where product_id = ${productId}`;

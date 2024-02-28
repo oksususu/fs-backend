@@ -1,5 +1,5 @@
 const { ValidationError } = require("../utils/async-handler");
-const client = require("./dbClient");
+const client = require("../config/dbClient");
 
 brand_name_dict = {
   brandName: "brand_name",

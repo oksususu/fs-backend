@@ -1,5 +1,5 @@
 const { ValidationError } = require("../utils/async-handler");
-const client = require("./dbClient");
+const client = require("../config/dbClient");
 
 const user_check_query = "select * from public.user where user_id =";
 

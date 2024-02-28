@@ -1,0 +1,114 @@
+paths:
+  /account/login:
+    post:
+      tags:
+        - Account
+      summary: 유저 로그인
+      requestBody:
+        content:
+          application/json:
+            example:
+              email: "fs@gmail.com"
+              password: "fsfs09"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: 이메일이나 비밀번호가 틀렸습니다.
+
+  /account:
+    get:
+      tags:
+        - Account
+      summary: 유저정보 확인
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    post:
+      tags:
+        - Account
+      summary: 유저 가입
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+            example:
+              userName: "fs"
+              email: "fs@gmail.com"
+              password: "fsfs09"
+              address: "서울특별시 강남구 테헤란로 231(역삼동) 센터필드"
+              phoneNumber: "01077778888"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    delete:
+      tags:
+        - Account
+      summary: 유저 탈퇴
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+    put:
+      tags:
+        - Account
+      summary: 유저 수정
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              userName: "fs"
+              password: "fsfs09"
+              address: "서울특별시 강남구 테헤란로 231(역삼동) 센터필드"
+              phoneNumber: "01077778888"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    user:
+      type: object
+      properties:
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+      required:
+        - userName
+        - email
+        - password
+        - address
+        - phoneNumber

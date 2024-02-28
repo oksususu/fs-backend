@@ -1,5 +1,5 @@
 const { ValidationError } = require("../utils/async-handler");
-const client = require("./dbClient");
+const client = require("../config/dbClient");
 
 const returnBrandsByBrandId = async (brandId) => {
   const select_query = `select * from brand where brand_id = ${brandId}`;

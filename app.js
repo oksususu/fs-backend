@@ -15,6 +15,10 @@ const likeRouter = require("./routes/like");
 const brandRouter = require("./routes/brand");
 const jobRouter = require("./routes/job");
 const categoryRouter = require("./routes/category");
+const accountRouter = require("./routes/account");
+
+const passport = require("passport");
+const passportConfig = require("./config/passport");
 
 const app = express();
 
@@ -29,14 +33,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
-app.use("/user", usersRouter);
 app.use("/product", productsRouter);
 app.use("/like", likeRouter);
 app.use("/brand", brandRouter);
 app.use("/job", jobRouter);
 app.use("/category", categoryRouter);
+app.use("/account", accountRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use(passport.initialize());
+passportConfig();
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
