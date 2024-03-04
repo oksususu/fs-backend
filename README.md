@@ -1,6 +1,6 @@
 # FS(Fashion Shoppingmall Platform) 프로젝트 - 백엔드
 
-## ERP
+## ERD
 
 ![erp](public/img/erp.png)
 
