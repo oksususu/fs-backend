@@ -60,7 +60,6 @@ exports.deleteUser = async (req, res) => {
   const query = `delete from public.user where email='${email}' RETURNING *`;
 
   const users = await client.query(query).then((res) => res.rows);
-  console.log(users);
   if (users.length === 0) {
     throw new ValidationError(400, `이미 탈퇴되었거나, 존재하지 않는 유저입니다`);
   }
@@ -89,7 +88,5 @@ exports.updateUser = async (req, res) => {
 
 /* 로그인 */
 exports.signIn = async (req, res) => {
-  console.log(req);
-  console.log(req.user);
   res.json(req.user);
 };

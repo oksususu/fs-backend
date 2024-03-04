@@ -110,5 +110,3 @@ components:
         - userName
         - email
         - password
-        - address
-        - phoneNumber
