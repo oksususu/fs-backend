@@ -56,8 +56,9 @@ exports.getBrandsByCategory = async (req, res) => {
   const query = `select DISTINCT brand.brand_id from brand join product on product.brand_id=brand.brand_id where product.category_id = '${categoryId}' limit ${limit}`;
 
   // 카테고리 체크
-  const category = client.query(`select * from category where category_id=${categoryId}`);
-  if (category.length !== 0) {
+  const category = await client.query(`select * from category where category_id=${categoryId}`).then((res) => res.rows);
+  console.log(category);
+  if (category.length === 0) {
     throw new ValidationError(404, `해당 카테고리id가 존재하지 않습니다.`);
   }
 
