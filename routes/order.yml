@@ -1,0 +1,65 @@
+paths:
+  /order:
+    get:
+      tags:
+        - Order
+      summary: 주문 조회
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+
+    post:
+      tags:
+        - Order
+      summary: 주문 생성
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/order"
+
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+  /order/{id}:
+    put:
+      tags:
+        - Order
+      summary: 주문 취소
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Error
+
+components:
+  schemas:
+    order:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 202
+        totalPrice:
+          type: integer
+          example: 366000
+        orderItems:
+          type: array
+          items:
+            type: object
+          example: [{ "productId": 963, "quantity": 1, "price": 48000 }, { "productId": 1586, "quantity": 2, "price": 159000 }]
+      required:
+        - userId
+        - totalPrice
+        - orderItems
