@@ -15,7 +15,8 @@ const local = new LocalStrategy(config, async (email, password, done) => {
     const users = await accountController.authenticate(email, password);
 
     if (users.length === 1) {
-      const accessToken = jwt.sign({ email, info: "info" }, secret, { expiresIn: "1d" }); // 1일 뒤 만료되는 accessToken
+      const user = users[0];
+      const accessToken = jwt.sign({ email, user_id: user.user_id }, secret, { expiresIn: "1d" }); // 1일 뒤 만료되는 accessToken
       const refreshToken = jwt.sign({}, secret, { expiresIn: "3d" }); // 3일 뒤 만료되는 refreshToken
       done(null, { accessToken, refreshToken });
     } else if (users.length === 0) {

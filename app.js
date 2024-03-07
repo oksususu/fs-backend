@@ -16,6 +16,7 @@ const brandRouter = require("./routes/brand");
 const jobRouter = require("./routes/job");
 const categoryRouter = require("./routes/category");
 const accountRouter = require("./routes/account");
+const orderRouter = require("./routes/order");
 
 const passport = require("passport");
 const passportConfig = require("./config/passport");
@@ -39,6 +40,7 @@ app.use("/brand", brandRouter);
 app.use("/job", jobRouter);
 app.use("/category", categoryRouter);
 app.use("/account", accountRouter);
+app.use("/order", orderRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(passport.initialize());
