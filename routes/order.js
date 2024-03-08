@@ -9,9 +9,9 @@ var router = express.Router();
 router.get("/", passport.authenticate("jwt-user", { session: false }), asyncHandler(orderController.getOrder));
 
 /* 주문 생성 api*/
-router.post("/", asyncHandler(orderController.createOrder));
+router.post("/", passport.authenticate("jwt-user", { session: false }), asyncHandler(orderController.createOrder));
 
 /* 주문 취소 api*/
-router.put("/:id", asyncHandler(orderController.cancelOrder));
+router.put("/:id", passport.authenticate("jwt-user", { session: false }), asyncHandler(orderController.cancelOrder));
 
 module.exports = router;

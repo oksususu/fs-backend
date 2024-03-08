@@ -1,5 +1,4 @@
 const { ValidationError } = require("../utils/async-handler");
-const client = require("../config/dbClient");
 const Order = require("../models/order");
 const OrderItem = require("../models/orderItem");
 const Product = require("../models/product");
@@ -7,7 +6,7 @@ const sequelize = require("../config/orm");
 
 /* 주문 조회 */
 exports.getOrder = async (req, res) => {
-  const { user_id: userId } = req.user;
+  const { userId } = req.user;
   let orderDataList = [];
 
   const order_limit = 5;
@@ -36,7 +35,8 @@ exports.getOrder = async (req, res) => {
 };
 /* 주문 생성 */
 exports.createOrder = async (req, res) => {
-  const { userId, totalPrice, orderItems } = req.body;
+  const { userId } = req.user;
+  const { totalPrice, orderItems } = req.body;
 
   // 참고문서: https://sequelize.org/docs/v6/other-topics/transactions/
   try {
@@ -60,11 +60,15 @@ exports.createOrder = async (req, res) => {
 /* 주문 취소 */
 exports.cancelOrder = async (req, res) => {
   const { id: orderId } = req.params;
+  const { userId } = req.user;
 
   // sequelize
   try {
     await sequelize.transaction(async (t) => {
       const orderToUpdate = await Order.findByPk(orderId);
+      if (userId !== orderToUpdate.user_id) {
+        throw new ValidationError(401, "권한이 없는 주문 id입니다");
+      }
       if (!orderToUpdate) {
         throw new ValidationError(404, "존재하지 않는 주문 id입니다");
       }

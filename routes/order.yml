@@ -14,6 +14,8 @@ paths:
       tags:
         - Order
       summary: 주문 생성
+      security:
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -31,6 +33,8 @@ paths:
       tags:
         - Order
       summary: 주문 취소
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
